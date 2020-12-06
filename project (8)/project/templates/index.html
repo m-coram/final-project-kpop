@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<script>
+
+    // function to fade each row into existance
+    function fade(id, iter)
+    {
+        if (iter <= 1.0)
+        {
+            document.getElementById(id).style.opacity = iter;
+            iter += 0.1;
+            setTimeout(fade, 50, id, iter);
+        }
+    }
+
+    // upon loading, check width, table and each row waits its turn to fade in
+    // matchMedia tutorial from geeksforgeeks
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.matchMedia("(max-width: 767px)").matches)
+        {
+            // don't show news on mobile
+            document.getElementById("table").style.display = "none";
+        }
+        else
+        {
+            // fade in table
+            setTimeout(fade, 2500, "table", 0.1);
+        }
+        // fade in rows
+        for (t=1; t<6; t++)
+        {
+            var iter = 0.1;
+            id = "row"+t;
+            setTimeout(fade, 500*(t-1), id, iter);
+        }
+     });
+
+</script>
+
+{% endblock %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<h1></h1>
+
+<h3 id="row1" style="opacity:0.0;">🌼 Browse <a href="/albums">Albums & Versions</a> 🌼 </h3>
+<h3 id="row2" style="opacity:0.0;">🌼 Browse <a href="/artists">Artists</a> 🌼 </h3>
+<h3 id="row3" style="opacity:0.0;">🌼 Browse <a href="/songs">Songs</a> 🌼 </h3>
+<h3 id="row4" style="opacity:0.0;">🌼 <a href="/search">Search</a> for Albums, Artists, or Songs 🌼 </h3>
+<h3 id="row5" style="opacity:0.0;">🌼 <a href="/add">Contribute</a> to the Database 🌼 </h3>
+<h1><br></h1>
+
+{% endblock %}
+
+{% block foot %}
+
+<table id="table" style="opacity:0.0;">
+    <tr>
+        <td>
+            <a class="twitter-timeline" href="https://twitter.com/allkpop?ref_src=twsrc%5Etfw">Tweets by allkpop</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </td>
+        <td>
+            <iframe src="https://www.soompi.com/" title="soompi news"></iframe>
+        </td>
+        <td>
+            <a class="twitter-timeline" href="https://twitter.com/BTS_twt?ref_src=twsrc%5Etfw">Tweets by BTS_twt</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </td>
+        <td>
+            <iframe src="https://www.koreaboo.com/" title="kpop news"></iframe>
+        </td>
+        <td>
+            <a class="twitter-timeline" href="https://twitter.com/kchartsofficial?ref_src=twsrc%5Etfw">Tweets by kchartsofficial</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </td>
+    </tr>
+</table>
+
+{% endblock %}

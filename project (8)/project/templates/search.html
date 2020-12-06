@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block page %}
+    Search
+{% endblock %}
+
+{% block main %}
+
+<form action="/search" method="post" onsubmit="return checkValid()">
+    <!-- take user input -->
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="input" placeholder="Keyword" type="text" required>
+    </div>
+
+    <!-- submit button -->
+    <div class="form-group">
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>
+
+{% endblock %}

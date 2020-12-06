@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Versions
+{% endblock %}
+
+{% block main %}
+
+<h2>Album: {{album_title}}</h2>
+<h3>Artist: {{artist_name}}</h3>
+
+<h3>🌼🌼🌼</h3>
+
+<h2>Tracklist</h2>
+<ul>
+    {% for song in tracklist %}
+    <li>{{song}}</li>
+    {% endfor %}
+</ul>
+
+<h3>🌼🌼🌼</h3>
+
+<h2>Versions</h2>
+{% for row in versions %}
+<div class="media">
+  <img src={{row.version_photo_url}} class="align-self-center mr-3" id="version_photo" alt="Version Photo">
+  <div class="media-body">
+    <h5 class="mt-0">{{row.version}}</h5>
+    <p class="mb-0">{{row.description}}</p>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

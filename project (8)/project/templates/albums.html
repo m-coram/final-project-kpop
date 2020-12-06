@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<!-- sortable code from GitHub -->
+<link rel="stylesheet" href="/static/sortable-theme-minimal.css" />
+<script src="/static/sortable.min.js"></script>
+{% endblock %}
+
+{% block title %}
+    Albums
+{% endblock %}
+
+{% block page %}
+    Albums
+{% endblock %}
+
+{% block main %}
+
+<!-- table of albums -->
+<!-- table, thumbnail formats from Bootstrap-->
+<table class="sortable-theme-minimal table table-hover" data-sortable>
+  <thead>
+    <tr>
+      <th scope="col" data-sortable="false">Logo</th>
+      <th scope="col">Name</th>
+      <th scope="col">Artist</th>
+      <th scope="col" data-sortable="false">Explore Versions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in albums %}
+    <tr>
+      <td><img src={{row.album_photo_url}} alt="Album Photo" class="img-thumbnail"></td>
+      <td>{{row.title}}</td>
+      <td>{{row.name}}</td></ts>
+      <td>
+        <form action="/albums" method="POST">
+          <input type="hidden" name="album_id" value={{row.id}} id="album_id">
+          <button class="btn btn-primary" type="submit">See Versions</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,249 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<script>
+    // check whether "other" artist, en/dis-able other artist inputs
+    function checkOther()
+    {
+        var other = document.querySelector("div.form-group select[name='dropdown']");
+        if (other.value == "other")
+        {
+            document.getElementById("new_artist").disabled = false;
+            document.getElementById("new_artist_url").disabled = false;
+            document.getElementById("new_artist").required = true;
+            document.getElementById("new_artist_url").required = true;
+        }
+        else
+        {
+            document.getElementById("new_artist").disabled = true;
+            document.getElementById("new_artist_url").disabled = true;
+            document.getElementById("new_artist").required = false;
+            document.getElementById("new_artist_url").required = false;
+        }
+    }
+
+    // check whether current image inputs are ok (.png or .jpg)
+    // endsWith tutorial from w3schools
+    function checkImage(id)
+    {
+        var element = document.getElementById(id);
+        var filename = element.value;
+        // only check if there's been input
+        if (filename)
+        {
+            if (!filename.endsWith(".png") && !filename.endsWith(".jpg"))
+            {
+                element.classList.add('is-invalid');
+                element.focus();
+                return false;
+            }
+            else
+            {
+                element.classList.remove('is-invalid');
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
+    // check whether the inputs are all ok
+    function checkInputs(versions_max)
+    {
+        // check that there's at least 1 song, 1 version (w/ url and description)
+        var songinfo = document.getElementById("song1");
+        var song = songinfo.value;
+        if (!song)
+        {
+            alert("please add at least one song");
+            songinfo.focus();
+            return false;
+        }
+        var verinfo = document.getElementById("version1");
+        var ver = verinfo.value;
+        if (!ver)
+        {
+            alert("please add at least one version");
+            verinfo.focus();
+            return false;
+        }
+        var verurlinfo = document.getElementById("version_url1");
+        var verurl = verurlinfo.value;
+        if (!verurl)
+        {
+            alert("please add at least one version image url");
+            verurlinfo.focus();
+            return false;
+        }
+        var verdescinfo = document.getElementById("verdesc1");
+        var verdesc = verdescinfo.value;
+        if (!verdesc)
+        {
+            alert("please add at least one version description");
+            verdescinfo.focus();
+            return false;
+        }
+
+        // check new artist logo url
+        if (!checkImage("new_artist_url"))
+        {
+            alert("please enter valid URL");
+            return false;
+        }
+
+        // check new artist logo url
+        if (!checkImage("new_album_url"))
+        {
+            alert("please enter valid URL");
+            return false;
+        }
+
+        // check the versions input
+        var i;
+        for (i=1; i<parseInt(versions_max); i++)
+        {
+            var element_name = document.getElementById("version"+i);
+            var element_url = document.getElementById("version_url"+i);
+            var element_desc = document.getElementById("verdesc"+i);
+
+            // check if row is complete
+            if (element_name.value || element_url.value || element_desc.value)
+            {
+                if (!element_name.value)
+                {
+                    alert("missing version name");
+                    element_name.focus();
+                    return false;
+                }
+                if (!element_url.value)
+                {
+                    alert("missing version url");
+                    element_url.focus();
+                    return false;
+                }
+                if (!element_desc.value)
+                {
+                    alert("missing version description");
+                    element_desc.focus();
+                    return false;
+                }
+            }
+
+            // check that version url is valid
+            var filename = element_url.value;
+            // only check if there was input
+            if (filename)
+            {
+                if (!filename.endsWith(".png") && !filename.endsWith(".jpg"))
+                {
+                    element_url.classList.add('is-invalid');
+                    alert("please enter valid URL");
+                    element_url.focus();
+                    return false;
+                }
+                else
+                {
+                    element_url.classList.remove('is-invalid');
+                }
+            }
+        }
+
+        // if all ok
+        return true;
+    }
+
+</script>
+{% endblock %}
+
+{% block title %}
+    Add to the Database
+{% endblock %}
+
+{% block page %}
+    Add to the Database
+{% endblock %}
+
+{% block main %}
+
+<!-- form to get user's input -->
+<form action="/add" method="post" onsubmit="return checkInputs({{versions_max}})">
+
+    <!-- choose the artist -->
+    <!-- onchange tutorial from w3schools -->
+    <h4>Select Artist</h4>
+    <p>please select "other" if adding new artist</p>
+    <div class="form-group">
+        <select name="dropdown" required onchange="checkOther()">
+            <option disabled selected value="">Artist</option>
+            {% for artist in artists %}
+                <option value="{{artist}}">{{artist}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- add new artist -->
+    <h4>Add New Artist to Database</h4>
+    <p>if artist is not in dropdown menu above</p>
+    <div class="form-group">
+        <input autocomplete="off" class="form-control" name="new_artist" placeholder="Add New Artist" type="text" id="new_artist" disabled>
+    </div>
+
+    <!-- add new artist photo -->
+    <h4>New Artist Logo</h4>
+    <p>please use a direct url ending in .png or .jpg</p>
+    <div class="form-group">
+        <input autocomplete="off" class="form-control" name="new_artist_url" placeholder="New Artist Logo Url" type="text"
+        id="new_artist_url" disabled onfocusout="checkImage('new_artist_url')">
+    </div>
+
+    <!-- add new album -->
+    <h4>Add New Album</h4>
+    <div class="form-group">
+        <input autocomplete="off" class="form-control" name="album" placeholder="Album Title" type="text" required>
+    </div>
+
+    <!-- add new album photo -->
+    <h4>New Album's Logo</h4>
+    <p>please use a direct url ending in .png or .jpg</p>
+    <div class="form-group">
+        <input autocomplete="off" class="form-control" name="album_url" placeholder="Album Logo Url" type="text"
+        id="new_album_url" onfocusout="checkImage('new_album_url')" required>
+    </div>
+
+    <h4>Tracklist</h4>
+    <p>please enter at least 1 song</p>
+    <p>please enter one song per box</p>
+    <!-- add all songs -->
+    <div class="form-group">
+        {% for i in range(1,songs_max) %}
+            <input autocomplete="off" class="form-control" name="song{{i}}" placeholder="Song {{i}}" type="text" id="song{{i}}">
+        {% endfor %}
+    </div>
+
+    <h4>Versions</h4>
+    <p>please add at least 1 version with a description</p>
+    <p>please use a direct url ending in .png or .jpg</p>
+
+    <!-- add all versions -->
+    <div class="form-group">
+    {% for j in range(1,versions_max) %}
+    <div>
+    <p>Version {{j}}</p>
+    <input autocomplete="off" class="form-control" name="version{{j}}" placeholder="Version Name" type="text" id="version{{j}}">
+    <input autocomplete="off" class="form-control" name="version_url{{j}}" placeholder="Version Photo Url" type="text"
+    id="version_url{{j}}" onfocusout="checkImage('version_url{{j}}')">
+    <input autocomplete="off" class="form-control" name="version_description{{j}}" placeholder="Version Description" type="text" id="verdesc{{j}}">
+    </div>
+    {% endfor %}
+    </div>
+
+    <div class="form-group">
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+
+</form>
+
+{% endblock %}

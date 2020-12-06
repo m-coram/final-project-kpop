@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Artists
+{% endblock %}
+
+{% block page %}
+    Artists
+{% endblock %}
+
+{% block main %}
+
+<!-- list of artists -->
+
+<!-- table of artists -->
+<!-- table, thumbnail formats from Bootstrap-->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Logo</th>
+      <th scope="col">Name</th>
+      <th scope="col">Albums</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in artists %}
+    <tr>
+      <td><img src={{row.artist_photo_url}} alt="Artist Photo" class="img-thumbnail"></td>
+      <td>{{row.name}}</td>
+      <td>
+      <!-- dark button from Bootstrap -->
+      <form action="/albums" method="GET">
+        <input type="hidden" name="artist_id" value={{row.id}} id="artist_id">
+        <button class="btn btn-primary" type="submit">Browse Albums</button>
+      </form>
+    </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<!-- sortable code from GitHub -->
+<link rel="stylesheet" href="/static/sortable-theme-minimal.css" />
+<script src="/static/sortable.min.js"></script>
+{% endblock %}
+
+{% block title %}
+    Songs
+{% endblock %}
+
+{% block page %}
+    Songs
+{% endblock %}
+
+{% block main %}
+
+<!-- table of songs -->
+<!-- table format from Bootstrap-->
+<table class="sortable-theme-minimal table table-hover" data-sortable>
+  <thead>
+    <tr>
+      <th scope="col">Song Title</th>
+      <th scope="col">Artist</th>
+      <th scope="col">Explore Album</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <!-- Loop through each song, display info in table -->
+    {% for row in songs %}
+    <tr>
+      <td>{{row.song}}</td>
+      <td>{{row.name}}</td>
+      <td>
+        <!-- dark button from Bootstrap -->
+        <form action="/albums" method="POST">
+          <input type="hidden" name="album_id" value={{row.album_id}} id="album_id">
+          <button class="btn btn-outline-dark" type="submit">{{row.title}}</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

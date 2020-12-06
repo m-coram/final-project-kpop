@@ -1,0 +1,147 @@
+/* from finance */
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* from finance */
+main .form-control
+{
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+/* from finance */
+main
+{
+    /* Scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* Center contents */
+    text-align: center;
+}
+
+/* from finance */
+main img
+{
+    /* Constrain images on small screens */
+    max-width: 100%;
+}
+
+/* buttons */
+button {
+    font-size: 20px;
+    padding: 2rem;
+}
+
+/* all body format */
+body {
+    font-family: 'Merriweather', serif;
+    margin: auto;
+    padding-bottom: 2rem;
+    text-align: center;
+    color: black;
+    background-color: #b2d8d8;
+}
+
+/* table format, stackoverflow */
+table {
+    text-align: left;
+    margin: auto;
+    table-layout: fixed;
+    width: 90%;
+}
+
+/* table format for index page */
+td {
+    padding: 0.5rem;
+}
+
+/* for add page spacing */
+div {
+    padding-bottom: 1rem;
+}
+
+/* fancy links from Bootstrap*/
+/* unvisited link */
+a:link {
+  color: #000000;
+  text-decoration: underline;
+}
+
+/* visited link */
+a:visited {
+  color: #008080;
+  text-decoration: underline;
+}
+
+/* mouse over link */
+a:hover {
+  color: #e7feff;
+  text-decoration: underline;
+}
+
+/* for tracklist, from StackOverflow */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* headers */
+h3 {
+    padding: 1rem;
+}
+h2 {
+    padding: 1rem;
+}
+
+/* index page news feeds */
+iframe {
+    height: 400px;
+    width: 100%;
+}
+
+/* for the thumbnail images*/
+.img-thumbnail{
+    width: 100px;
+    height: 100px;
+}
+
+/* for the versions page*/
+.media {
+    text-align: left;
+    padding: 1rem;
+}
+
+/* for the submit, search buttons*/
+.btn-primary {
+    background-color: #008080;
+}
+
+/* for search results */
+.btn-link {
+    color: #008080;
+}
+
+/* mouse over buttons */
+.btn:hover {
+  background-color: #e7feff;
+  text-decoration: underline;
+  color: #008080;
+}
+
+/* index page news */
+.twitter-timeline{
+    max-width: 300px;
+    max-height: 400px;
+}
+
+/* for the version photos*/
+#version_photo {
+    width: 200px;
+    height: auto;
+}

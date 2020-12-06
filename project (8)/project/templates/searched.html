@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block page %}
+    Search
+{% endblock %}
+
+{% block main %}
+
+<form action="/search" method="post">
+    <!-- take user input -->
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="input" placeholder="Keyword" type="text">
+    </div>
+
+    <div class="form-group">
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>
+
+<!-- display search results -->
+
+<h3>Artists:</h3>
+<ul>
+    <!-- in case no results -->
+    <li>
+        <p>{{nr.artists}}</p>
+    </li>
+
+    {% for item in artists %}
+    <li>
+        <form action="/albums" method="GET">
+        <input type="hidden" name="artist_id" value={{item.id}} id="artist_id">
+        <button class="btn btn-link" type="submit">{{item.name}}</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Albums:</h3>
+<ul>
+    <!-- in case no results -->
+    <li>
+        <p>{{nr.albums}}</p>
+    </li>
+
+    {% for item in albums %}
+    <li>
+        <form action="/albums" method="POST">
+          <input type="hidden" name="album_id" value={{item.id}} id="album_id">
+          <button class="btn btn-link" type="submit">{{item.title}} ({{item.name}})</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Songs:</h3>
+<ul>
+    <!-- in case no results -->
+    <li>
+        <p>{{nr.songs}}</p>
+    </li>
+
+    {% for item in songs %}
+    <li>
+        <form action="/albums" method="POST">
+        <input type="hidden" name="album_id" value={{item.album_id}} id="album_id">
+        <button class="btn btn-link" type="submit">{{item.song}} ({{item.name}})</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
